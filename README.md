@@ -14,8 +14,6 @@ String[] combination = { "<Parameter1>", "<Parameter2>", "<Parameter3>", ... };
 
 String source1 = "<csv1 path>";
 String source2 = "<csv2 path>";
-
-
 ```
 
 For example:
