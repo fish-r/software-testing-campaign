@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +12,6 @@ public class CsvCompare {
     public static final String delimiter = ",";
     private ArrayList<Integer> combination_index = new ArrayList<>();
     private ArrayList<String> header;
-    private String headerString;
     private File csvOutput = new File("output.csv");
     private Integer exceptionCount = 0;
 
@@ -31,20 +30,7 @@ public class CsvCompare {
             // check the headers of the csv files, if not raise exception
             String header1 = reader1.readLine();
             String header2 = reader2.readLine();
-            if (header1.equals(header2) == false) {
-                reader1.close();
-                reader2.close();
-                throw new Exception("Error: Headers are not the same or are in different order");
-            } else {
-                // save header as array
-                this.headerString = header1;
-                this.header = new ArrayList<String>(Arrays.asList(header1.split(delimiter)));
-                // get the index of the given combination wrt to current headers
-                for (String element : combinationInput) {
-                    String current = '"' + element + '"';
-                    combination_index.add(header.indexOf(current));
-                }
-            }
+            checkHeaders(combinationInput, reader1, reader2, header1, header2);
             String line1;
             String line2;
             while (((line1 = reader1.readLine()) != null) && ((line2 = reader2.readLine()) != null)) {
@@ -59,8 +45,25 @@ public class CsvCompare {
 
             // handle when IO exception
         } catch (FileNotFoundException e) {
-            System.out.println("File could not be found.");
+            System.out.println("Error: File could not be found.");
             e.printStackTrace();
+        }
+    }
+
+    private void checkHeaders(ArrayList<String> combinationInput, BufferedReader reader1, BufferedReader reader2,
+            String header1, String header2) throws IOException, Exception {
+        if ((header1.equals(header2) == false) || (header1.equals(null) || (header2.equals(null)))) {
+            reader1.close();
+            reader2.close();
+            throw new Exception("Error: Headers are malformed.");
+        } else {
+            // save header as array
+            this.header = new ArrayList<String>(Arrays.asList(header1.split(delimiter)));
+            // get the index of the given combination wrt to current headers
+            for (String element : combinationInput) {
+                String current = '"' + element + '"';
+                combination_index.add(header.indexOf(current));
+            }
         }
     }
 
