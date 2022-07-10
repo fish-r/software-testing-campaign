@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ public class CsvCompare {
     public static final String delimiter = ",";
     private ArrayList<Integer> combination_index = new ArrayList<>();
     private ArrayList<String> header;
+    private String headerString;
     private File csvOutput = new File("output.csv");
     private Integer exceptionCount = 0;
 
@@ -19,6 +21,7 @@ public class CsvCompare {
         // turn paths into file object
         File dataSource1 = new File(path1);
         File dataSource2 = new File(path2);
+        clearCsv(this.csvOutput);
 
         try {
             // read file objects
@@ -32,9 +35,9 @@ public class CsvCompare {
                 reader1.close();
                 reader2.close();
                 throw new Exception("Error: Headers are not the same or are in different order");
-                // TODO: potentially rearrange the headers
             } else {
                 // save header as array
+                this.headerString = header1;
                 this.header = new ArrayList<String>(Arrays.asList(header1.split(delimiter)));
                 // get the index of the given combination wrt to current headers
                 for (String element : combinationInput) {
@@ -45,8 +48,7 @@ public class CsvCompare {
             String line1;
             String line2;
             while (((line1 = reader1.readLine()) != null) && ((line2 = reader2.readLine()) != null)) {
-                // TODO: check if line is legit comma separated values
-                // checkLine(line1,line2);
+                checkLine(line1, line2);
                 stringDifference(line1, line2);
 
             }
@@ -59,6 +61,16 @@ public class CsvCompare {
         } catch (FileNotFoundException e) {
             System.out.println("File could not be found.");
             e.printStackTrace();
+        }
+    }
+
+    public void checkLine(String line1, String line2) throws Exception {
+        try {
+            line1.indexOf(delimiter);
+            line2.indexOf(delimiter);
+        } catch (Exception e) {
+            System.out.println("Error; String is not a valid csv entry");
+            System.out.println(e);
         }
     }
 
@@ -90,7 +102,7 @@ public class CsvCompare {
                     // write to new csv
                     System.out.println(mismatch);
                     exceptionCount++;
-                    writeToCsv(this.csvOutput, line1, line2);
+                    writeToCsv(this.csvOutput, line1, line2, mismatch);
                     return;
                 }
             }
@@ -98,11 +110,22 @@ public class CsvCompare {
         }
     }
 
-    public static void writeToCsv(File csvFile, String line1, String line2) {
+    public void writeToCsv(File csvFile, String line1, String line2, String mismatch) {
         try {
-            PrintWriter writer = new PrintWriter(csvFile);
-            writer.println(line1);
-            writer.println(line2);
+            FileWriter writer = new FileWriter(csvFile, true);
+            writer.write(line1 + " | " + line2 + " | " + "mismatch: " + mismatch + "\n");
+            writer.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void clearCsv(File csvFile) {
+        try {
+            FileWriter writer = new FileWriter(csvFile, false);
+            writer.write("");
             writer.close();
 
         } catch (Exception e) {
