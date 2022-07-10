@@ -1,4 +1,4 @@
-# Software-testing-campaign
+# 50.003 Software Testing Campaign
 
 ### This repository is part of the assignment software-testing-campaign for 50.003 Elements of Software Construction
 
@@ -10,10 +10,10 @@ Clone this repo:
 Under `CsvCompareTest.java` , change the following lines 9-12 to the file to be compared
 
 ```
-        String[] combination = { "<Parameter1>", "<Parameter2>", "<Parameter3>", ... };
+String[] combination = { "<Parameter1>", "<Parameter2>", "<Parameter3>", ... };
 
-        String source1 = "<csv1 path>";
-        String source2 = "<csv2 path>";
+String source1 = "<csv1 path>";
+String source2 = "<csv2 path>";
 
 
 ```
@@ -21,17 +21,17 @@ Under `CsvCompareTest.java` , change the following lines 9-12 to the file to be 
 For example:
 
 ```
-       String[] combination = { "Customer ID#", "Account No.", "Type" };
+String[] combination = { "Customer ID#", "Account No.", "Type" };
 
-        String source1 = "sample_file_1.csv";
-        String source2 = "sample_file_3.csv";
+String source1 = "sample_file_1.csv";
+String source2 = "sample_file_3.csv";
 ```
 
 Next, compile and run:
 
 ```
-    javac CsvCompareTest.java
-    java CsvCompareTest
+javac CsvCompareTest.java
+java CsvCompareTest
 ```
 
 The total number of exceptions due to mismatches will be displayed in the terminal.
@@ -80,6 +80,7 @@ Submission Guidelines: You will not submit anything in eDimension. Instead, you 
 ● Week 8 [Document and Code]: Use case diagram should be complete. All Java (or similar) files should be complete in terms of implementing the functionality and (in the bare minimum) the sample test files should pass. Deadline 10th July, 11.59pm.
 
 ● Week 9 [Document]: A report on your boundary value analysis and equivalence class partitioning should be complete. Deadline 17th July, 11.59pm.
+
 ● Week 10 [Code]: All (Junit) test files conducting unit and system level testing should be complete. Deadline 24th July, 11.59pm.
 
 ● Week 12 [Code]: A refactored/bug fixed version of the code. The fuzzer code is complete and properly documented for running by a third-party. The implementations of others are also distributed this week for independent testing by group members. Deadline 7th Aug, 11.59pm.
