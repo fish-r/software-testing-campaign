@@ -2,9 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class CsvCompare {
 
@@ -62,12 +62,12 @@ public class CsvCompare {
         }
     }
 
-    public void stringDifference(String str1, String str2) throws Exception {
+    public void stringDifference(String line1, String line2) throws Exception {
         // check if line1 and line2 are the same
-        if (!str1.equals(str2)) {
+        if (!line1.equals(line2)) {
             // first split the string into arrays
-            String[] temp1 = str1.split(delimiter);
-            String[] temp2 = str2.split(delimiter);
+            String[] temp1 = line1.split(delimiter);
+            String[] temp2 = line2.split(delimiter);
 
             // check for length of input
             if (temp1.length != temp2.length) {
@@ -90,6 +90,7 @@ public class CsvCompare {
                     // write to new csv
                     System.out.println(mismatch);
                     exceptionCount++;
+                    writeToCsv(this.csvOutput, line1, line2);
                     return;
                 }
             }
@@ -97,7 +98,16 @@ public class CsvCompare {
         }
     }
 
-    public static void writeToCsv() {
+    public static void writeToCsv(File csvFile, String line1, String line2) {
+        try {
+            PrintWriter writer = new PrintWriter(csvFile);
+            writer.println(line1);
+            writer.println(line2);
+            writer.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 
