@@ -38,7 +38,7 @@ public class CsvCompare {
                 stringDifference(line1, line2);
 
             }
-            System.out.println(exceptionCount);
+            System.out.println("exception count: " + exceptionCount);
 
             reader1.close();
             reader2.close();
@@ -63,6 +63,9 @@ public class CsvCompare {
             for (String element : combinationInput) {
                 String current = '"' + element + '"';
                 combination_index.add(header.indexOf(current));
+                if (header.indexOf(current) == -1) {
+                    throw new Exception("Invalid input combination");
+                }
             }
         }
     }
@@ -97,13 +100,13 @@ public class CsvCompare {
                 }
             }
             // if combination tallies, loop through and check difference
-            System.out.println("checking for difference:");
+            // System.out.println("checking for difference:");
             for (Integer i = 0; i < temp1.length; i++) {
                 if (!temp1[i].equals(temp2[i])) {
                     // if different, note the header and the difference
                     String mismatch = header.get(i);
                     // write to new csv
-                    System.out.println(mismatch);
+                    // System.out.println(mismatch);
                     exceptionCount++;
                     writeToCsv(this.csvOutput, line1, line2, mismatch);
                     return;

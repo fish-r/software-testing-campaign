@@ -2,21 +2,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CsvCompareTest {
-    String[] combination;
 
     public static void main(String[] args) {
-        /*
-         * Input combination as a String array
-         */
         // Default combination: "Customer ID#","Account No.","Currency","Type","Balance"
-        // TODO: add way to set combination, set up tests
 
-        String[] combination = { "Customer ID#", "Account No.", "Type" };
+        String[] combination = { "Customer ID#", "Account No.", "Type" }; // change accordingly
 
-        CsvCompare csvCompare = new CsvCompare();
+        String source1 = "sample_file_1.csv"; // change accordingly
+        String source2 = "sample_file_3.csv";
+
         try {
+            CsvCompare csvCompare = new CsvCompare();
             ArrayList<String> combinationInput = new ArrayList<String>(Arrays.asList(combination));
-            csvCompare.compare("sample_file_1.csv", "sample_file_3.csv", combinationInput);
+            csvCompare.compare(source1, source2,
+                    combinationInput);
 
         } catch (Exception e) {
             System.out.println(e);
