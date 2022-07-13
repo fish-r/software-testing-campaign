@@ -1,6 +1,7 @@
 # 50.003 Software Testing Campaign
 
 ### This repository is part of the assignment software-testing-campaign for 50.003 Elements of Software Construction
+### Goh Yu Fan (1005054)
 
 ## Getting started
 
