@@ -119,7 +119,7 @@ public class CsvCompare {
     public void writeToCsv(File csvFile, String line1, String line2, String mismatch) {
         try {
             FileWriter writer = new FileWriter(csvFile, true);
-            writer.write(line1 + " | " + line2 + " | " + "mismatch: " + mismatch + "\n");
+            writer.write(line1 + "\n" + line2 + "\n");
             writer.close();
 
         } catch (Exception e) {
