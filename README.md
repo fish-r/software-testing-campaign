@@ -1,6 +1,7 @@
 # 50.003 Software Testing Campaign
 
 ### This repository is part of the assignment software-testing-campaign for 50.003 Elements of Software Construction
+
 ### Goh Yu Fan (1005054)
 
 ## Getting started
@@ -8,38 +9,38 @@
 Clone this repo:
 `git clone https://github.com/fish-r/software-testing-campaign.git`
 
-Under `CsvCompareTest.java` , change the following lines 9-12 to the file to be compared
+#Requirements:
 
-```
-String[] combination = { "<Parameter1>", "<Parameter2>", "<Parameter3>", ... };
+1. CSV files to be compared are in the same directory as Main.java
+2. The two CSV files should have corresponding column headers (there cannot be no headers)
 
-String source1 = "<csv1 path>";
-String source2 = "<csv2 path>";
-```
+Compile by running `javac Main.java`
+
+Next, run `Main.java` by writing the command in this format: `java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter"> `
 
 For example:
 
 ```
-String[] combination = { "Customer ID#", "Account No.", "Type" };
-
-String source1 = "sample_file_1.csv";
-String source2 = "sample_file_3.csv";
-```
-
-Next, compile and run:
+java Main sample_file_1.csv sample_file_3.csv -c "Customer ID#","Account No.","Type"
 
 ```
-javac CsvCompareTest.java
-java CsvCompareTest
-```
 
-The total number of exceptions due to mismatches will be displayed in the terminal.
-Go over to `output.csv` to view the output:
+If comparison is successful, you will see this message:
 
 ```
-"ID99","BOS8059799","SGD","CURRENT","208045" | "ID99","BOS8059799","SGD","CURRENT","208043" | mismatch: "Balance"
-"ID198","BOS30360198","USD","CURRENT","679878" | "ID198","BOS30360198","USD","CURRENT","6798788" | mismatch: "Balance"
-"ID298","BOS50591298","CHF","SAVINGS","988459" | "ID298","BOS50591298","USD","SAVINGS","988459" | mismatch: "Currency"
+Exception Count: <number of exceptions>
+Write Success: Please Check output.csv
+```
+
+Go over to `output.csv` to view the output, for example the output for the comparison between `sample_file_1.csv` and `sample_file_3.csv`:
+
+```
+"ID99","BOS8059799","SGD","CURRENT","208045"
+"ID99","BOS8059799","SGD","CURRENT","208043"
+"ID198","BOS30360198","USD","CURRENT","679878"
+"ID198","BOS30360198","USD","CURRENT","6798788"
+"ID298","BOS50591298","CHF","SAVINGS","988459"
+"ID298","BOS50591298","USD","SAVINGS","988459"
 ```
 
 ## Below is the use case diagram
