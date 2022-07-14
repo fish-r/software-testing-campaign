@@ -4,22 +4,7 @@ import java.util.Arrays;
 public class CsvCompareTest {
 
     public static void main(String[] args) {
-        // Default combination: "Customer ID#","Account No.","Currency","Type","Balance"
 
-        String[] combination = { "Customer ID#", "Account No.", "Type" }; // change accordingly
-
-        String source1 = "sample_file_1.csv"; // change accordingly
-        String source2 = "sample_file_3.csv";
-
-        try {
-            CsvCompare csvCompare = new CsvCompare();
-            ArrayList<String> combinationInput = new ArrayList<String>(Arrays.asList(combination));
-            csvCompare.compare(source1, source2,
-                    combinationInput);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     /*
