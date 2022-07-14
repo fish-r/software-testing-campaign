@@ -16,7 +16,8 @@ Clone this repo:
 
 Compile by running `javac Main.java`
 
-Next, run `Main.java` by writing the command in this format: `java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter"> `
+Next, run `Main.java` by writing the command in this format:
+`java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter"> `
 
 For example:
 
