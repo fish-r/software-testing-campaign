@@ -17,7 +17,11 @@ Clone this repo:
 Compile by running `javac Main.java`
 
 Next, run `Main.java` by writing the command in this format:
-`java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter"> `
+
+```
+java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter">
+
+```
 
 For example:
 
@@ -43,6 +47,10 @@ Go over to `output.csv` to view the output, for example the output for the compa
 "ID298","BOS50591298","CHF","SAVINGS","988459"
 "ID298","BOS50591298","USD","SAVINGS","988459"
 ```
+
+## The Equivalence Class and Boundary Report can be found here:
+
+[Equivalence Class and Boundary Condition Report](/Equivalence_Report.docx)
 
 ## Below is the use case diagram
 
