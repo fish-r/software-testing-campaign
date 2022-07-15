@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -14,11 +15,13 @@ public class CsvCompare {
     private String outputData = "";
 
     public void compare(String p1, String p2, ArrayList<String> inputCombi) throws Exception {
+        checkDuplicates(inputCombi);
         ParsedCsv csv1 = new ParsedCsv(p1);
         ParsedCsv csv2 = new ParsedCsv(p2);
         checkHeaders(csv1.header, csv2.header);
         indexOfHeader(inputCombi);
 
+        // Hashsets do not allow duplicate values
         LinkedHashSet<String> c1 = csv1.content;
         LinkedHashSet<String> c2 = csv2.content;
         LinkedHashSet<String> c3 = new LinkedHashSet<String>(csv1.content);
@@ -59,7 +62,21 @@ public class CsvCompare {
         exceptionCount++;
     }
 
+    private void checkDuplicates(ArrayList<String> array) throws Exception {
+        HashSet<String> set = new HashSet<String>();
+        for (String s : array) {
+            if (set.contains(s)) {
+                throw new Exception("Error: Input combination contains duplicates");
+            }
+            set.add(s);
+        }
+    }
+
     private void indexOfHeader(List<String> inputCombi) throws Exception {
+        // check length of header vs length of combi
+        if (inputCombi.size() >= header.size()) {
+            throw new Exception("Error: Input combination has more parameters than number of header columns.");
+        }
         for (String e : inputCombi) {
             String s = '"' + e + '"';
             Integer index = header.indexOf(s);

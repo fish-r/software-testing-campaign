@@ -15,12 +15,12 @@ public class Main {
         }
         String combInput = input.get(f + 1);
         String[] combination = combInput.split(",");
+        ArrayList<String> combinationInput = new ArrayList<>(Arrays.asList(combination));
         String path1 = args[0];
         String path2 = args[1];
 
         try {
             CsvCompare csvCompare = new CsvCompare();
-            ArrayList<String> combinationInput = new ArrayList<String>(Arrays.asList(combination));
             csvCompare.compare(path1, path2,
                     combinationInput);
 
