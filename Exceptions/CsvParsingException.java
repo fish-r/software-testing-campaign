@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class CsvParsingException extends RuntimeException {
-    public CsvParsingException(String errorMessage, Throwable err) {
-        super(errorMessage, err);
+    public CsvParsingException(String errorMessage) {
+        super(errorMessage);
     }
 }
