@@ -39,7 +39,7 @@ public class ParsedCsv {
     }
 
     private void checkLine(String line) throws Exception {
-        System.out.println("checking line " + lineNumber);
+        // System.out.println("checking line " + lineNumber);
         if (line == null) {
             throw new Exception("Error: Line" + lineNumber + " is not a valid CSV entry: " + line);
         } else if (line.isEmpty() || line.isBlank() || line.equals("\n")) {

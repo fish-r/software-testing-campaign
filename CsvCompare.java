@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import Exceptions.CsvComparisonException;
+
 public class CsvCompare {
     public static final String delimiter = ",";
     private ArrayList<Integer> combIndex = new ArrayList<>();
@@ -38,7 +40,7 @@ public class CsvCompare {
         ;
 
         if (outputData.equals("")) {
-            throw new Exception("Error: NO ENTRIES MATCHING COMBINATION");
+            throw new CsvComparisonException("Error: NO ENTRIES MATCHING COMBINATION");
         }
         writeToCsv(csvOutput);
         System.out.println("Exception Count: 3");
