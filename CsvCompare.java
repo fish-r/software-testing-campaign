@@ -15,7 +15,7 @@ public class CsvCompare {
     private String outputData = "";
 
     public void compare(String p1, String p2, ArrayList<String> inputCombi) throws Exception {
-        checkDuplicates(inputCombi);
+        checkInputCombi(inputCombi);
         ParsedCsv csv1 = new ParsedCsv(p1);
         ParsedCsv csv2 = new ParsedCsv(p2);
         checkHeaders(csv1.header, csv2.header);
@@ -31,7 +31,7 @@ public class CsvCompare {
                 // System.out.println("entry1" + entry1);
                 for (String entry2 : c2) {
                     // System.out.println("Entry 2: " + entry2);
-                    checkCombi(entry1, entry2);
+                    checkAgainstCombi(entry1, entry2);
                 }
             }
         }
@@ -45,7 +45,7 @@ public class CsvCompare {
         System.out.println("Write Success: Please Check output.csv");
     }
 
-    private void checkCombi(String entry1, String entry2) throws Exception {
+    private void checkAgainstCombi(String entry1, String entry2) throws Exception {
         // System.out.println("entry 1: " + entry1);
         // System.out.println("entry 2: " + entry2);
         List<String> arr1 = Arrays.asList(entry1.split(delimiter));
@@ -62,13 +62,14 @@ public class CsvCompare {
         exceptionCount++;
     }
 
-    private void checkDuplicates(ArrayList<String> array) throws Exception {
+    private void checkInputCombi(ArrayList<String> array) throws Exception {
         HashSet<String> set = new HashSet<String>();
         for (String s : array) {
             if (set.contains(s)) {
+                // check duplicate entries
                 throw new Exception("Error: Input combination contains duplicates");
-            }
-            set.add(s);
+            } else if (s.isEmpty() || s.isBlank() || s.equals("\n"))
+                set.add(s);
         }
     }
 
@@ -101,22 +102,10 @@ public class CsvCompare {
         }
     }
 
-    public void writeToCsv(File csvFile) {
+    private void writeToCsv(File csvFile) {
         try {
             FileWriter writer = new FileWriter(csvFile, false);
             writer.write(outputData);
-            writer.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
-
-    public void clearCsv(File csvFile) {
-        try {
-            FileWriter writer = new FileWriter(csvFile, false);
-            writer.write("");
             writer.close();
 
         } catch (Exception e) {
