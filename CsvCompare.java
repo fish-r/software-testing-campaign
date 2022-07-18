@@ -74,7 +74,7 @@ public class CsvCompare {
 
     private void indexOfHeader(List<String> inputCombi) throws Exception {
         // check length of header vs length of combi
-        if (inputCombi.size() >= header.size()) {
+        if (inputCombi.size() > header.size()) {
             throw new Exception("Error: Input combination has more parameters than number of header columns.");
         }
         for (String e : inputCombi) {
