@@ -19,7 +19,7 @@ public class ParsedCsv {
                 reader.close();
                 throw new Exception("Error: Empty contents.");
             }
-            header = Arrays.asList(firstLine.split(","));
+            header = Arrays.asList(firstLine.split(delimiter));
             String line;
             while ((line = reader.readLine()) != null) {
                 checkLine(line);
@@ -27,6 +27,8 @@ public class ParsedCsv {
                 content.add(line.strip());
             }
             reader.close();
+            checkSize();
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -34,9 +36,20 @@ public class ParsedCsv {
 
     private void checkLine(String line) throws Exception {
         if (!line.contains(delimiter)) {
-            throw new Exception("Error: Line is not a valid CSV entry.");
+            throw new Exception("Error: Line is not a valid CSV entry: " + line);
         } else if (line == "") {
             throw new Exception("Error: empty line detected.");
+        } else {
+            List<String> entry = Arrays.asList(line.split(delimiter));
+            if (entry.size() != header.size()) {
+                throw new Error("Error: Line is not a valid CSV entry: " + line);
+            }
+        }
+    }
+
+    private void checkSize() throws Exception {
+        if (this.content.size() < 2) {
+            throw new Error("Error: Invald CSV file format.");
         }
     }
 

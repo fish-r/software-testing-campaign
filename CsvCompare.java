@@ -94,7 +94,7 @@ public class CsvCompare {
 
     private void checkHeaders(List<String> header1, List<String> header2) throws Exception {
         if (!header1.equals(header2)) {
-            throw new Exception("Error: Headers do not correspond:" + header1 + "|" + header2);
+            throw new Exception("Error: Headers do not correspond:" + header1 + " | " + header2);
         } else {
             // set headers
             header = header1;
