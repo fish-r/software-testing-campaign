@@ -48,9 +48,9 @@ Go over to `output.csv` to view the output, for example the output for the compa
 "ID298","BOS50591298","USD","SAVINGS","988459"
 ```
 
-## The Equivalence Class and Boundary Report can be found here:
+## The Equivalence Class Partitioning and Boundary Value Analysis Report:
 
-[Equivalence Class and Boundary Condition Report](/Equivalence_Report.docx)
+[Equivalence Class and Boundary Condition Report](/Equivalence_Report.pdf)
 
 ## Below is the use case diagram
 
