@@ -6,24 +6,44 @@
 
 ## Getting started
 
-Clone this repo:
-`git clone https://github.com/fish-r/software-testing-campaign.git`
+## Requirements:
 
-#Requirements:
+1. CSV files that is to be compared should be stored under src/main/csvfiles.
+2. The two CSV files to be compared should have non-empty valid column headers.
+3. The two CSV files to be compared should have corresponding column headers.
+4. The two CSV files to be compared should have at least one valid CSV entry after the headers.
+5. The number of parameters in the input combination should tally with the number of column headers.
 
-1. CSV files to be compared are in the same directory as Main.java
-2. The two CSV files should have corresponding column headers (there cannot be no headers)
-
-Compile by running `javac Main.java`
-
-Next, run `Main.java` by writing the command in this format:
+### Example CSV file contents:
 
 ```
-java Main.java <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter">
+"Customer ID#","Account No.","Currency","Type","Balance"
+"ID1","BOS963211","USD","SAVINGS","962510"
+"ID2","BOS85992","AUD","CURRENT","989898"
+"ID3","BOS656613","USD","CURRENT","595290"
+"ID4","BOS14824","INR","SAVINGS","772578"
+"ID5","BOS657505","CAD","SAVINGS","95538"
+...
+```
+
+### How to compile and run:
+
+1. Clone this repo: `git clone https://github.com/fish-r/software-testing-campaign.git`
+
+2. Navigate to /software-testing-campaign/src
+
+3. Compile the files: `javac ./main/Main.java`
+
+4. Make sure the files to be compared are in src/main/csvfiles
+
+5. Run the comparison with this command in this format:
+
+```
+java main.Main <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"parameter_2",...,<"last_parameter">
 
 ```
 
-For example:
+### Example input command:
 
 ```
 java Main sample_file_1.csv sample_file_3.csv -c "Customer ID#","Account No.","Type"
@@ -37,7 +57,15 @@ Exception Count: <number of exceptions>
 Write Success: Please Check output.csv
 ```
 
-Go over to `output.csv` to view the output, for example the output for the comparison between `sample_file_1.csv` and `sample_file_3.csv`:
+If CSV files and input are valid but there is no valid output (entries compared have no differences), the exception below will be displayed:
+
+```
+File check completed: NO ENTRIES MATCHING COMBINATION
+```
+
+Go over to `output.csv` found in to view the output,
+
+### Example output for comparing files `sample_file_1.csv` and `sample_file_3.csv`:
 
 ```
 "ID99","BOS8059799","SGD","CURRENT","208045"
@@ -52,7 +80,7 @@ Go over to `output.csv` to view the output, for example the output for the compa
 
 [Equivalence Class and Boundary Condition Report](/Equivalence_Report.pdf)
 
-## Below is the use case diagram
+## Use case diagram
 
 ![Use case diagram](/use-case-diagram.png)
 
