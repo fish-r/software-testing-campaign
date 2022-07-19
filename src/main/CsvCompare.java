@@ -42,7 +42,7 @@ public class CsvCompare {
         ;
 
         if (outputData.equals("")) {
-            throw new CsvComparisonException("Error: NO ENTRIES MATCHING COMBINATION");
+            throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
         }
         writeToCsv(csvOutput);
         System.out.println("Exception Count: 3");

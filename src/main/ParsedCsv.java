@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class ParsedCsv {
     List<String> header;
-    LinkedHashSet<String> content = new LinkedHashSet<>();
+    public LinkedHashSet<String> content = new LinkedHashSet<>();
     final String delimiter = ",";
     Integer lineNumber = 1;
 
