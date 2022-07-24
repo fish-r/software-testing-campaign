@@ -55,6 +55,8 @@ public class ParsedCsvTest {
                 { "invalid_entry_2.csv", "Error: CSV file is invalid" },
                 { "missing_entry.csv", "Error: CSV file is invalid" },
                 { "no_header.csv", "Error: CSV file is invalid" },
+                { "test_1_no_quotes.csv", "Error: CSV file is invalid" },
+
         });
 
     }
@@ -65,7 +67,7 @@ public class ParsedCsvTest {
         // assertThrows(CsvParsingException.class, () -> new ParsedCsv(path));
 
         new ParsedCsv(this.path);
-        // assertEquals(this.expectedMessage, outContent);
+        assertEquals(this.expectedMessage, outContent);
 
     }
 }
