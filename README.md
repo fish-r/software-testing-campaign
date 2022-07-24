@@ -46,7 +46,7 @@ java main.Main <"file_name_1.csv"> <"file_name_2.csv"> -c <"parameter_1">,<"para
 ### Example input command:
 
 ```
-java Main sample_file_1.csv sample_file_3.csv -c "Customer ID#","Account No.","Type"
+java main.Main sample_file_1.csv sample_file_3.csv -c "Customer ID#","Account No.","Type"
 
 ```
 

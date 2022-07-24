@@ -40,8 +40,8 @@ public class ParsedCsvTest {
     public ParsedCsvTest(String path, String message) {
         this.path = pathPrefix + path;
         this.expectedMessage = message;
-        // File file = new File("src/main/csvfiles/sample_file_1.csv");
-        // System.out.println(file.exists());
+        File file = new File("src/main/csvfiles/sample_file_1.csv");
+        System.out.println(file.exists());
     }
 
     // parameterized test
