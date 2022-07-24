@@ -28,15 +28,12 @@ public class CsvCompare {
         // Hashsets do not allow duplicate values
         LinkedHashSet<String> c1 = csv1.content;
         LinkedHashSet<String> c2 = csv2.content;
-        LinkedHashSet<String> c3 = new LinkedHashSet<String>(csv1.content);
         // remove all same entries
-        if (c1.removeAll(c2) && c2.removeAll(c3)) {
-            for (String entry1 : c1) {
-                // System.out.println("entry1" + entry1);
-                for (String entry2 : c2) {
-                    // System.out.println("Entry 2: " + entry2);
-                    checkAgainstCombi(entry1, entry2);
-                }
+        for (String entry1 : c1) {
+            // System.out.println("entry1" + entry1);
+            for (String entry2 : c2) {
+                // System.out.println("Entry 2: " + entry2);
+                checkAgainstCombi(entry1, entry2);
             }
         }
         ;
@@ -45,7 +42,7 @@ public class CsvCompare {
             throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
         }
         writeToCsv(csvOutput);
-        System.out.println("Exception Count: 3");
+        System.out.println("Exception Count: " + exceptionCount);
         System.out.println("Write Success: Please Check output.csv");
     }
 
@@ -61,9 +58,16 @@ public class CsvCompare {
             }
         }
 
-        // add to output data; they are already not equal
-        outputData = outputData + entry1 + "\n" + entry2 + "\n";
-        exceptionCount++;
+        for (Integer index = 0; index < header.size(); index++) {
+            if (combIndex.contains(index)) {
+                continue;
+            } else if (!arr1.get(index).equals(arr2.get(index))) {
+                // add to output data; they are already not equal
+                outputData = outputData + entry1 + "\n" + entry2 + "\n";
+                exceptionCount++;
+                return;
+            }
+        }
     }
 
     private void checkInputCombi(ArrayList<String> array) throws Exception {
