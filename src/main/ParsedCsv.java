@@ -7,6 +7,8 @@ import java.util.List;
 import java.io.FileReader;
 import java.util.Arrays;
 
+import exceptions.CsvParsingException;
+
 public class ParsedCsv {
     List<String> header;
     public LinkedHashSet<String> content = new LinkedHashSet<>();
@@ -29,7 +31,7 @@ public class ParsedCsv {
             }
             if (content == null) {
                 reader.close();
-                throw new Exception("Error: CSV file is empty.");
+                throw new CsvParsingException("Error: CSV file is empty.");
             }
             reader.close();
             checkSize();
@@ -42,18 +44,19 @@ public class ParsedCsv {
     private void checkLine(String line) throws Exception {
         // System.out.println("checking line " + lineNumber);
         if (line == null) {
-            throw new Exception("Error: Line" + lineNumber + " is not a valid CSV entry: " + line);
+            throw new CsvParsingException("Error: Line " + lineNumber + " is not a valid CSV entry");
         } else if (line.isEmpty() || line.isBlank() || line.equals("\n")) {
-            throw new Exception("Error: empty line detected at line " + lineNumber);
+            throw new CsvParsingException("Error: empty line detected at line " + lineNumber);
         } else if (header != null) {
             // check against header size, if header size exists
             List<String> entry = Arrays.asList(line.split(delimiter));
             if (entry.size() != header.size()) {
-                throw new Error("Error: Line " + lineNumber + " is not a valid CSV entry: " + line);
+                throw new Error("Error: Line " + lineNumber + " is not a valid CSV entry");
             } else {
                 for (String e : entry) {
                     if (e.isBlank() || e.isEmpty() || e.equals("/n")) {
-                        throw new Exception("Error: Line " + lineNumber + "contains invalid elements: " + line);
+                        throw new CsvParsingException(
+                                "Error: Line " + lineNumber + "contains invalid elements");
                     }
                 }
             }
@@ -62,7 +65,7 @@ public class ParsedCsv {
 
     private void checkSize() throws Exception {
         if (this.content.size() < 2) {
-            throw new Error("Error: Invald CSV file format.");
+            throw new CsvParsingException("Error: Invald CSV file format.");
         }
     }
 
