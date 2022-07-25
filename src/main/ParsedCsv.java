@@ -11,12 +11,19 @@ import exceptions.CsvParsingException;
 
 public class ParsedCsv {
     List<String> header;
-    public LinkedHashSet<String> content = new LinkedHashSet<>();
+    public LinkedHashSet<String> content;
     final String delimiter = ",";
     Integer lineNumber = 1;
+    private String path;
 
     public ParsedCsv(String path) {
+        this.path = path;
+        read(this.path);
+    }
+
+    public void read(String path) {
         try {
+            this.content = new LinkedHashSet<>();
             File file = new File(path);
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String firstLine = reader.readLine();
@@ -28,10 +35,6 @@ public class ParsedCsv {
                 // List<String> lineAsArray = Arrays.asList(line.strip().split(delimiter));
                 content.add(line.strip());
                 lineNumber++;
-            }
-            if (content == null) {
-                reader.close();
-                throw new CsvParsingException("Error: CSV file is empty.");
             }
             reader.close();
             checkSize();
@@ -51,7 +54,7 @@ public class ParsedCsv {
             // check against header size, if header size exists
             List<String> entry = Arrays.asList(line.split(delimiter));
             if (entry.size() != header.size()) {
-                throw new Error("Error: Line " + lineNumber + " is not a valid CSV entry");
+                throw new CsvParsingException("Error: Line " + lineNumber + " is not a valid CSV entry");
             } else {
                 for (String e : entry) {
                     if (e.isBlank() || e.isEmpty() || e.equals("/n")) {
@@ -65,7 +68,7 @@ public class ParsedCsv {
 
     private void checkSize() throws Exception {
         if (this.content.size() < 2) {
-            throw new CsvParsingException("Error: Invald CSV file format.");
+            throw new CsvParsingException("Error: Invald CSV file format");
         }
     }
 
