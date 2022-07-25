@@ -31,7 +31,6 @@ public class CsvCompare {
             // Hashsets do not allow duplicate values
             LinkedHashSet<String> c1 = csv1.getContent();
             LinkedHashSet<String> c2 = csv2.getContent();
-            // remove all same entries
             for (String entry1 : c1) {
                 // System.out.println("entry1" + entry1);
                 for (String entry2 : c2) {
@@ -45,6 +44,7 @@ public class CsvCompare {
                 throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
             }
             writeToCsv(csvOutput);
+            System.out.println(outputData);
             System.out.println("Exception Count: " + exceptionCount);
             System.out.println("Write Success: Please Check output.csv");
 
