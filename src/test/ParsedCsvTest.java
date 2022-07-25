@@ -16,7 +16,7 @@ import main.ParsedCsv;
 
 @RunWith(Parameterized.class)
 public class ParsedCsvTest {
-    enum Type {
+    private enum Type {
         INVALID, VALID
     };
 
@@ -64,14 +64,14 @@ public class ParsedCsvTest {
 
     @Test
     public void invalidCsvShouldNotCrashParsing() {
-        new ParsedCsv(path);
         Assume.assumeTrue(type == Type.INVALID);
+        new ParsedCsv(path);
     }
 
     @Test
     public void validCsvShouldBeParsedCorrectly() {
-        ParsedCsv parsedCsv = new ParsedCsv(path);
         Assume.assumeTrue(type == Type.VALID);
-        assertEquals(output1, parsedCsv.content);
+        ParsedCsv parsedCsv = new ParsedCsv(path);
+        assertEquals(output1, parsedCsv.getContent());
     }
 }

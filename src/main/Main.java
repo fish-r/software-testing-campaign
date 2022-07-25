@@ -24,7 +24,9 @@ public class Main {
         String path2 = pathPrefix + args[1];
 
         try {
-            csvCompare.compare(path1, path2,
+            ParsedCsv csv1 = new ParsedCsv(path1);
+            ParsedCsv csv2 = new ParsedCsv(path2);
+            csvCompare.compare(csv1, csv2,
                     combinationInput);
 
         } catch (Exception e) {

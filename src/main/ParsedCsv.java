@@ -10,8 +10,10 @@ import java.util.Arrays;
 import exceptions.CsvParsingException;
 
 public class ParsedCsv {
-    List<String> header;
-    public LinkedHashSet<String> content;
+    private List<String> header;
+
+    private LinkedHashSet<String> content;
+
     final String delimiter = ",";
     Integer lineNumber = 1;
     private String path;
@@ -42,6 +44,14 @@ public class ParsedCsv {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public LinkedHashSet<String> getContent() {
+        return content;
+    }
+
+    public List<String> getHeader() {
+        return header;
     }
 
     private void checkLine(String line) throws Exception {

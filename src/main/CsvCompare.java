@@ -18,35 +18,43 @@ public class CsvCompare {
     private Integer exceptionCount = 0;
     private String outputData = "";
 
-    public void compare(String p1, String p2, ArrayList<String> inputCombi) throws Exception {
-        checkInputCombi(inputCombi);
-        ParsedCsv csv1 = new ParsedCsv(p1);
-        ParsedCsv csv2 = new ParsedCsv(p2);
-        checkHeaders(csv1.header, csv2.header);
-        indexOfHeader(inputCombi);
-
-        // Hashsets do not allow duplicate values
-        LinkedHashSet<String> c1 = csv1.content;
-        LinkedHashSet<String> c2 = csv2.content;
-        // remove all same entries
-        for (String entry1 : c1) {
-            // System.out.println("entry1" + entry1);
-            for (String entry2 : c2) {
-                // System.out.println("Entry 2: " + entry2);
-                checkAgainstCombi(entry1, entry2);
-            }
-        }
-        ;
-
-        if (outputData.equals("")) {
-            throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
-        }
-        writeToCsv(csvOutput);
-        System.out.println("Exception Count: " + exceptionCount);
-        System.out.println("Write Success: Please Check output.csv");
+    public String getOutputData() {
+        return outputData;
     }
 
-    private void checkAgainstCombi(String entry1, String entry2) throws Exception {
+    public void compare(ParsedCsv csv1, ParsedCsv csv2, ArrayList<String> inputCombi) throws CsvComparisonException {
+        try {
+            checkInputCombi(inputCombi);
+            checkHeaders(csv1.getHeader(), csv2.getHeader());
+            indexOfHeader(inputCombi);
+
+            // Hashsets do not allow duplicate values
+            LinkedHashSet<String> c1 = csv1.getContent();
+            LinkedHashSet<String> c2 = csv2.getContent();
+            // remove all same entries
+            for (String entry1 : c1) {
+                // System.out.println("entry1" + entry1);
+                for (String entry2 : c2) {
+                    // System.out.println("Entry 2: " + entry2);
+                    checkAgainstCombi(entry1, entry2);
+                }
+            }
+            ;
+
+            if (outputData.equals("")) {
+                throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
+            }
+            writeToCsv(csvOutput);
+            System.out.println("Exception Count: " + exceptionCount);
+            System.out.println("Write Success: Please Check output.csv");
+
+        } catch (CsvComparisonException e) {
+            System.out.println(e);
+        }
+
+    }
+
+    private void checkAgainstCombi(String entry1, String entry2) throws CsvComparisonException {
         // System.out.println("entry 1: " + entry1);
         // System.out.println("entry 2: " + entry2);
         List<String> arr1 = Arrays.asList(entry1.split(delimiter));
@@ -70,27 +78,28 @@ public class CsvCompare {
         }
     }
 
-    private void checkInputCombi(ArrayList<String> array) throws Exception {
+    private void checkInputCombi(ArrayList<String> array) throws CsvComparisonException {
         HashSet<String> set = new HashSet<String>();
         for (String s : array) {
             if (set.contains(s)) {
                 // check duplicate entries
-                throw new Exception("Error: Input combination contains duplicates");
+                throw new CsvComparisonException("Error: Input combination contains duplicates");
             } else if (s.isEmpty() || s.isBlank() || s.equals("\n"))
                 set.add(s);
         }
     }
 
-    private void indexOfHeader(List<String> inputCombi) throws Exception {
+    private void indexOfHeader(List<String> inputCombi) throws CsvComparisonException {
         // check length of header vs length of combi
         if (inputCombi.size() > header.size()) {
-            throw new Exception("Error: Input combination has more parameters than number of header columns.");
+            throw new CsvComparisonException(
+                    "Error: Input combination has more parameters than number of header columns.");
         }
         for (String e : inputCombi) {
             String s = '"' + e + '"';
             Integer index = header.indexOf(s);
             if (index == -1) {
-                throw new Exception("Error: Input combination parameter invalid: not a header column.");
+                throw new CsvComparisonException("Error: Input combination parameter invalid: not a header column.");
             }
             combIndex.add(index);
         }
@@ -101,9 +110,9 @@ public class CsvCompare {
         // }
     }
 
-    private void checkHeaders(List<String> header1, List<String> header2) throws Exception {
+    private void checkHeaders(List<String> header1, List<String> header2) throws CsvComparisonException {
         if (!header1.equals(header2)) {
-            throw new Exception("Error: Headers do not correspond:" + header1 + " | " + header2);
+            throw new CsvComparisonException("Error: Headers do not correspond:" + header1 + " | " + header2);
         } else {
             // set headers
             header = header1;
