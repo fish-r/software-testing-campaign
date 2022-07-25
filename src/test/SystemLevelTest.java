@@ -30,7 +30,7 @@ public class SystemLevelTest {
     private ArrayList<String> inputCombi = new ArrayList<String>();
     private CsvCompare csvCompare = new CsvCompare();
 
-    public SystemLevelTest(String path1, String path2, String outputFilePath, String[] inputs, Type type) {
+    public SystemLevelTest(String path1, String path2, String[] inputs, String outputFilePath, Type type) {
         this.file1 = new ParsedCsv(pathPrefix + path1);
         this.file2 = new ParsedCsv(pathPrefix + path2);
         this.type = type;
@@ -42,14 +42,19 @@ public class SystemLevelTest {
 
     @Parameters
     public static Collection<Object[]> input() {
-        return Arrays.asList(new Object[][] {
-                { "valid_1.csv", "valid_1.csv", "Customer ID#", Type.INVALID_FILE },
-                { "valid_1.csv", "valid_4_no_balance.csv", "Customer ID#", Type.INVALID_FILE },
-                { "valid_1.csv", "valid_4_no_balance.csv", "", Type.INVALID_INPUT },
-                { "valid_1.csv", "valid_2.csv", "Customer ID#", Type.VALID },
-                { "valid_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.VALID },
-                { "valid_dupl_lines_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.VALID },
+        String[] input1 = { "Customer ID#" };
+        String[] input2 = { "Customer ID#", "Account No.", "Type" };
+        String[] input3 = { "Customer ID#", "Account No.", "Currency", "Type", "Balance"
+        };
 
+        return Arrays.asList(new Object[][] {
+                { "valid_1.csv", "valid_1.csv", input1, "output.csv", Type.INVALID_FILE },
+                { "valid_1.csv", "valid_4_no_balance.csv", input1, Type.INVALID_FILE },
+                { "valid_1.csv", "valid_4_no_balance.csv", "", Type.INVALID_INPUT },
+                { "valid_1.csv", "valid_4_no_balance.csv", input3, Type.INVALID_INPUT },
+                { "valid_1.csv", "valid_2.csv", input2, Type.VALID },
+                { "valid_1.csv", "valid_dupl_lines_2.csv", input2, Type.VALID },
+                { "valid_dupl_lines_1.csv", "valid_dupl_lines_2.csv", input2, Type.VALID },
         });
     }
 

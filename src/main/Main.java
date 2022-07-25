@@ -2,7 +2,8 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
+
+import exceptions.InputException;
 
 public class Main {
     static final String flag = "-c";
@@ -10,12 +11,12 @@ public class Main {
     static final CsvCompare csvCompare = new CsvCompare();
 
     // java Main sample_file_1.csv sample_file_2.csv -c "Customer ID#","Account
-    public static void main(String[] args) throws InputMismatchException {
+    public static void main(String[] args) throws InputException {
         // Default combination: "Customer ID#","Account No.","Currency","Type","Balance"
         ArrayList<String> input = new ArrayList<>(Arrays.asList(args));
         Integer f = input.indexOf(flag);
         if (f == -1) {
-            throw new InputMismatchException("Error: No input combination");
+            throw new InputException("Error: No input combination");
         }
         String combInput = input.get(f + 1);
         String[] combination = combInput.split(",");
