@@ -53,7 +53,8 @@ public class CsvCompareTest {
                 { "valid_1.csv", "valid_1.csv", "Customer ID#", Type.INCOMPATIBLE },
                 { "valid_1.csv", "valid_4_no_balance.csv", "Customer ID#", Type.INCOMPATIBLE },
                 { "valid_1.csv", "valid_2.csv", "Customer ID#", Type.COMPATIBLE },
-                { "valid_1.csv", "valid_dupl_lines.csv", "Customer ID#", Type.COMPATIBLE },
+                { "valid_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.COMPATIBLE },
+                { "valid_dupl_lines_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.COMPATIBLE },
         });
 
     }

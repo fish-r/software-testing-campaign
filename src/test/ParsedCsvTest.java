@@ -57,7 +57,7 @@ public class ParsedCsvTest {
                 { "no_header.csv", Type.INVALID },
                 { "test_1_no_quotes.csv", Type.INVALID },
                 { "valid_1.csv", Type.VALID },
-                { "valid_dupl_lines.csv", Type.VALID },
+                { "valid_dupl_lines_1.csv", Type.VALID },
 
         });
     }

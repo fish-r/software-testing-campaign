@@ -44,7 +44,7 @@ public class CsvCompare {
                 throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
             }
             writeToCsv(csvOutput);
-            System.out.println(outputData);
+            // System.out.println(outputData);
             System.out.println("Exception Count: " + exceptionCount);
             System.out.println("Write Success: Please Check output.csv");
 
