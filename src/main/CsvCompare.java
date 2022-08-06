@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import exceptions.CsvComparisonException;
+import main.CsvParser.ParsedCsv;
 
 public class CsvCompare {
     public static final String delimiter = ",";
@@ -22,9 +23,12 @@ public class CsvCompare {
         return outputData;
     }
 
-    public void compare(ParsedCsv csv1, ParsedCsv csv2, ArrayList<String> inputCombi) throws CsvComparisonException {
+    public void compare(CsvParser csvParser, ArrayList<String> inputCombi, String path1, String path2)
+            throws CsvComparisonException {
         try {
             checkInputCombi(inputCombi);
+            ParsedCsv csv1 = csvParser.read(path1);
+            ParsedCsv csv2 = csvParser.read(path2);
             checkHeaders(csv1.getHeader(), csv2.getHeader());
             indexOfHeader(inputCombi);
 

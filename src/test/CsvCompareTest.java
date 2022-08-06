@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import org.junit.Assume;
 import org.junit.Test;
@@ -13,7 +14,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import main.CsvCompare;
-import main.ParsedCsv;
+import main.CsvParser;
+import main.CsvParser.ParsedCsv;
 
 @RunWith(Parameterized.class)
 public class CsvCompareTest {
@@ -22,8 +24,9 @@ public class CsvCompareTest {
     };
 
     private CsvCompare csvCompare = new CsvCompare();
-    private ParsedCsv file1;
-    private ParsedCsv file2;
+    private CsvParser csvParser = new CsvParser();
+    private String path1;
+    private String path2;
     private ArrayList<String> inputCombi = new ArrayList<>();
     private Type type;
     private final String pathPrefix = "./bin/test/testfiles/";
@@ -37,9 +40,9 @@ public class CsvCompareTest {
             + "\"ID4\",\"BOS14824\",\"INR\",\"SAVINGS\",\"772578\"\n"
             + "\"ID4\",\"BOS538154\",\"HKD\",\"SAVINGS\",\"425024\"\n";
 
-    public CsvCompareTest(String fileName1, String fileName2, String inputCombi, Type type) {
-        this.file1 = new ParsedCsv(pathPrefix + fileName1);
-        this.file2 = new ParsedCsv(pathPrefix + fileName2);
+    public CsvCompareTest(String path1, String path2, String inputCombi, Type type) {
+        this.path1 = pathPrefix + path1;
+        this.path2 = pathPrefix + path2;
         this.inputCombi.add(inputCombi);
         this.type = type;
         // this.expectedError = expectedError;
@@ -62,7 +65,7 @@ public class CsvCompareTest {
     @Test
     public void incompatibleComparisonShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INCOMPATIBLE);
-        csvCompare.compare(file1, file2, inputCombi);
+        csvCompare.compare(this.csvParser, this.inputCombi, this.path1, this.path2);
         String actualOutput = csvCompare.getOutputData();
         assertEquals(emptyString, actualOutput);
     }
@@ -70,7 +73,7 @@ public class CsvCompareTest {
     @Test
     public void compatibleComparisonShouldCompareCorrectly() {
         Assume.assumeTrue(type == Type.COMPATIBLE);
-        csvCompare.compare(file1, file2, inputCombi);
+        csvCompare.compare(csvParser, inputCombi, path1, path2);
         String actualOutput = csvCompare.getOutputData();
         assertEquals(expectedOutput1, actualOutput);
     }
