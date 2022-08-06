@@ -9,25 +9,54 @@ public class Fuzzer {
     public Fuzzer() {
     };
 
+    public Fuzzer(Long seed) {
+        this.r.setSeed(seed);
+    }
+
     public String flipBitString(String input) {
         BitSet stringAsBitSet = stringToBitset(input);
-        System.out.println("Input: " + input);
         Integer indexToFlip = randomIndex(input);
         stringAsBitSet.flip(indexToFlip);
         byte[] flippedByteArray = stringAsBitSet.toByteArray();
         String output = flippedByteArray.toString();
+
+        System.out.println("Input: " + input);
         System.out.println("Output: " + output);
+
         return output;
     }
 
     public String replaceCharInString(String input) {
         char randomizedChar = (char) (r.nextInt(26) + 'a');
         Integer indexToReplace = randomIndex(input);
-        System.out.println("Random Character: " + randomizedChar);
         char[] newString = input.toCharArray();
         newString[indexToReplace] = randomizedChar;
+
+        System.out.println("Random Character: " + randomizedChar);
         System.out.println(newString);
+
         return String.valueOf(newString);
+    }
+
+    public String addCharToString(String input) {
+        char randomizedChar = (char) (r.nextInt(26) + 'a');
+        Integer position = randomIndex(input);
+        String output = input.substring(0, position) + randomizedChar + input.substring(position);
+
+        System.out.println("Input: " + input);
+        System.out.println("Output: " + output);
+
+        return output;
+    }
+
+    public String trimString(String input) {
+        Integer position = randomIndex(input);
+        String output = input.substring(0, position);
+
+        System.out.println("Input: " + input);
+        System.out.println("Output: " + output);
+
+        return output;
     }
 
     private Integer randomIndex(String input) {

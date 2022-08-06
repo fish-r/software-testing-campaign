@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
@@ -23,6 +22,18 @@ public class FuzzerTest {
     @Test
     public void replaceStringCharShouldMutateString() {
         String output = fuzzer.replaceCharInString(input);
+        assertNotEquals(input, output);
+    }
+
+    @Test
+    public void addCharToStringShouldMutateString() {
+        String output = fuzzer.addCharToString(input);
+        assertNotEquals(input, output);
+    }
+
+    @Test
+    public void trimStringShouldTruncateString() {
+        String output = fuzzer.trimString(input);
         assertNotEquals(input, output);
     }
 
