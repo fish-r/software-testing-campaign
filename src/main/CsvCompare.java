@@ -1,7 +1,5 @@
 package main;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,15 +13,19 @@ public class CsvCompare {
     public static final String delimiter = ",";
     private ArrayList<Integer> combIndex = new ArrayList<>();
     private List<String> header;
-    private File csvOutput = new File("output.csv");
     private Integer exceptionCount = 0;
     private String outputData = "";
+    private CsvParser csvParser = new CsvParser();
 
     public String getOutputData() {
         return outputData;
     }
 
-    public void compare(CsvParser csvParser, ArrayList<String> inputCombi, String path1, String path2)
+    public CsvCompare() {
+
+    }
+
+    public String compare(ArrayList<String> inputCombi, String path1, String path2)
             throws CsvComparisonException {
         try {
             checkInputCombi(inputCombi);
@@ -47,7 +49,6 @@ public class CsvCompare {
             if (outputData.equals("")) {
                 throw new CsvComparisonException("File check completed: NO ENTRIES MATCHING COMBINATION");
             }
-            writeToCsv(csvOutput);
             // System.out.println(outputData);
             System.out.println("Exception Count: " + exceptionCount);
             System.out.println("Write Success: Please Check output.csv");
@@ -55,6 +56,7 @@ public class CsvCompare {
         } catch (CsvComparisonException e) {
             System.out.println(e);
         }
+        return outputData;
 
     }
 
@@ -121,18 +123,6 @@ public class CsvCompare {
             // set headers
             header = header1;
         }
-    }
-
-    private void writeToCsv(File csvFile) {
-        try {
-            FileWriter writer = new FileWriter(csvFile, false);
-            writer.write(outputData);
-            writer.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
     }
 
 }

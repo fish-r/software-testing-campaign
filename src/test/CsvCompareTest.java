@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 
 import org.junit.Assume;
 import org.junit.Test;
@@ -14,8 +13,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import main.CsvCompare;
-import main.CsvParser;
-import main.CsvParser.ParsedCsv;
 
 @RunWith(Parameterized.class)
 public class CsvCompareTest {
@@ -24,7 +21,6 @@ public class CsvCompareTest {
     };
 
     private CsvCompare csvCompare = new CsvCompare();
-    private CsvParser csvParser = new CsvParser();
     private String path1;
     private String path2;
     private ArrayList<String> inputCombi = new ArrayList<>();
@@ -65,7 +61,7 @@ public class CsvCompareTest {
     @Test
     public void incompatibleComparisonShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INCOMPATIBLE);
-        csvCompare.compare(this.csvParser, this.inputCombi, this.path1, this.path2);
+        csvCompare.compare(this.inputCombi, this.path1, this.path2);
         String actualOutput = csvCompare.getOutputData();
         assertEquals(emptyString, actualOutput);
     }
@@ -73,7 +69,7 @@ public class CsvCompareTest {
     @Test
     public void compatibleComparisonShouldCompareCorrectly() {
         Assume.assumeTrue(type == Type.COMPATIBLE);
-        csvCompare.compare(csvParser, inputCombi, path1, path2);
+        csvCompare.compare(inputCombi, path1, path2);
         String actualOutput = csvCompare.getOutputData();
         assertEquals(expectedOutput1, actualOutput);
     }

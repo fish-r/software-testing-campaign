@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,6 +11,7 @@ public class Main {
     static final String flag = "-c";
     static final String pathPrefix = "main/csvfiles/";
     static final CsvCompare csvCompare = new CsvCompare();
+    static String output = "";
 
     // java Main sample_file_1.csv sample_file_2.csv -c "Customer ID#","Account
     public static void main(String[] args) throws InputException {
@@ -25,14 +28,25 @@ public class Main {
         String path2 = pathPrefix + args[1];
 
         try {
-            ParsedCsv csv1 = new ParsedCsv(path1);
-            ParsedCsv csv2 = new ParsedCsv(path2);
-            csvCompare.compare(csv1, csv2,
-                    combinationInput);
+            output = csvCompare.compare(combinationInput, path1, path2);
+            writeToCsv(output);
 
         } catch (Exception e) {
             System.out.println(e);
             System.exit(1);
+        }
+    }
+
+    private static void writeToCsv(String output) {
+        final File outputFile = new File("output.csv");
+
+        try {
+            FileWriter writer = new FileWriter(outputFile, false);
+            writer.write(output);
+            writer.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
     }

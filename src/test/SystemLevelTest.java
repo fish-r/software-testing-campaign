@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import main.CsvCompare;
-import main.ParsedCsv;
+import main.CsvParser;
 
 @RunWith(Parameterized.class)
 public class SystemLevelTest {
@@ -22,19 +22,18 @@ public class SystemLevelTest {
         INVALID_FILE, INVALID_INPUT, VALID
     };
 
-    private ParsedCsv file1;
-    private ParsedCsv file2;
+    private String path1;
+    private String path2;
     private final String pathPrefix = "./bin/test/testfiles/";
     private Type type;
-    private File outputFile;
+    private String output;
     private ArrayList<String> inputCombi = new ArrayList<String>();
     private CsvCompare csvCompare = new CsvCompare();
 
-    public SystemLevelTest(String path1, String path2, String[] inputs, String outputFilePath, Type type) {
-        this.file1 = new ParsedCsv(pathPrefix + path1);
-        this.file2 = new ParsedCsv(pathPrefix + path2);
+    public SystemLevelTest(String path1, String path2, String[] inputs, Type type) {
+        this.path1 = pathPrefix + path1;
+        this.path2 = pathPrefix + path2;
         this.type = type;
-        this.outputFile = new File(outputFilePath);
         for (String s : inputs) {
             inputCombi.add(s);
         }
@@ -48,7 +47,7 @@ public class SystemLevelTest {
         };
 
         return Arrays.asList(new Object[][] {
-                { "valid_1.csv", "valid_1.csv", input1, "output.csv", Type.INVALID_FILE },
+                { "valid_1.csv", "valid_1.csv", input1, Type.INVALID_FILE },
                 { "valid_1.csv", "valid_4_no_balance.csv", input1, Type.INVALID_FILE },
                 { "valid_1.csv", "valid_4_no_balance.csv", "", Type.INVALID_INPUT },
                 { "valid_1.csv", "valid_4_no_balance.csv", input3, Type.INVALID_INPUT },
@@ -61,18 +60,18 @@ public class SystemLevelTest {
     @Test
     public void invalidCombinationInputShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INVALID_INPUT);
-        csvCompare.compare(file1, file2, inputCombi);
+        output = csvCompare.compare(inputCombi, path1, path2);
     }
 
     @Test
     public void invalidCsvFileShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INVALID_FILE);
-        csvCompare.compare(file1, file2, inputCombi);
+        output = csvCompare.compare(inputCombi, path1, path2);
     }
 
     @Test
     public void validInputsShouldOutputCorrectly() {
         Assume.assumeTrue(type == Type.VALID);
-        csvCompare.compare(file1, file2, inputCombi);
+        csvCompare.compare(inputCombi, path1, path2);
     }
 }
