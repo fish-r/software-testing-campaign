@@ -1,5 +1,6 @@
 package test;
 
+import java.nio.charset.Charset;
 import java.util.BitSet;
 import java.util.Random;
 
@@ -57,6 +58,18 @@ public class Fuzzer {
         System.out.println("Output: " + output);
 
         return output;
+    }
+
+    public String generateRandomString(Integer length) {
+        byte[] array = new byte[length];
+        new Random().nextBytes(array);
+        String output = new String(array, Charset.forName("UTF-8"));
+
+        System.out.println("Input Length: " + length);
+        System.out.println("Output: " + output);
+
+        return output;
+
     }
 
     private Integer randomIndex(String input) {

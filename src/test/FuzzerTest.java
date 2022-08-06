@@ -37,4 +37,10 @@ public class FuzzerTest {
         assertNotEquals(input, output);
     }
 
+    @Test
+    public void generateRandomStringTest() {
+        String output = fuzzer.generateRandomString(input.length());
+        assertNotEquals(input, output);
+    }
+
 }
