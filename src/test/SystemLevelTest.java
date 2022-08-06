@@ -2,7 +2,8 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,8 +25,8 @@ public class SystemLevelTest {
     private String path1;
     private String path2;
     private final String pathPrefix = "./bin/test/testfiles/";
+    private final Path resultPath = Path.of("./bin/test/testfiles/result_1.csv");
     private Type type;
-    private String output;
     private String actual;
     private ArrayList<String> inputCombi = new ArrayList<String>();
     private CsvCompare csvCompare = new CsvCompare();
@@ -53,9 +54,8 @@ public class SystemLevelTest {
                 { "valid_1.csv", "valid_4_no_balance.csv", emptyInput, Type.INVALID_INPUT },
                 { "valid_1.csv", "valid_4_no_balance.csv", input3, Type.INVALID_INPUT },
                 { "valid_1.csv", "valid_4_no_balance.csv", input4, Type.INVALID_INPUT },
-                { "valid_1.csv", "valid_2.csv", input2, Type.VALID },
-                { "valid_1.csv", "valid_dupl_lines_2.csv", input2, Type.VALID },
-                { "valid_dupl_lines_1.csv", "valid_dupl_lines_2.csv", input2, Type.VALID },
+                { "sample_file_1.csv", "sample_file_3.csv", input2, Type.VALID },
+                { "sample_file_1.csv", "sample_file_3_dupl_lines.csv", input2, Type.VALID },
         });
     }
 
@@ -63,18 +63,25 @@ public class SystemLevelTest {
     public void invalidCombinationInputShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INVALID_INPUT);
         actual = csvCompare.compare(inputCombi, path1, path2);
+        assertEquals("", actual);
     }
 
     @Test
     public void invalidCsvFileShouldNotCrashSystem() {
         Assume.assumeTrue(type == Type.INVALID_FILE);
-        output = csvCompare.compare(inputCombi, path1, path2);
+        actual = csvCompare.compare(inputCombi, path1, path2);
+        assertEquals("", actual);
     }
 
     @Test
     public void validInputsShouldOutputCorrectly() {
         Assume.assumeTrue(type == Type.VALID);
-        output = csvCompare.compare(inputCombi, path1, path2);
-        // assertEquals(output, actual);
+        String actual = csvCompare.compare(inputCombi, path1, path2);
+        try {
+            String expected = Files.readString(resultPath);
+            assertEquals(expected, actual);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
