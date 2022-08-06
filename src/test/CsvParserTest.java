@@ -12,13 +12,16 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import main.ParsedCsv;
+import main.CsvParser;
+import main.CsvParser.ParsedCsv;
 
 @RunWith(Parameterized.class)
-public class ParsedCsvTest {
+public class CsvParserTest {
     private enum Type {
         INVALID, VALID
     };
+
+    private CsvParser csvParser = new CsvParser();
 
     private String path;
     private final String pathPrefix = "./bin/test/testfiles/";
@@ -31,7 +34,7 @@ public class ParsedCsvTest {
     private String s3 = "\"ID3\",\"BOS656613\",\"USD\",\"CURRENT\",\"595290\"";
     private String s4 = "\"ID4\",\"BOS14824\",\"INR\",\"SAVINGS\",\"772578\"";
 
-    public ParsedCsvTest(String path, Type type) {
+    public CsvParserTest(String path, Type type) {
         this.path = pathPrefix + path;
         this.type = type;
         init();
@@ -65,13 +68,13 @@ public class ParsedCsvTest {
     @Test
     public void invalidCsvShouldNotCrashParsing() {
         Assume.assumeTrue(type == Type.INVALID);
-        new ParsedCsv(path);
+        csvParser.read(path);
     }
 
     @Test
     public void validCsvShouldBeParsedCorrectly() {
         Assume.assumeTrue(type == Type.VALID);
-        ParsedCsv parsedCsv = new ParsedCsv(path);
+        ParsedCsv parsedCsv = csvParser.read(path);
         assertEquals(output1, parsedCsv.getContent());
     }
 }

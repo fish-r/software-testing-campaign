@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.io.FileReader;
 import java.util.Arrays;
-import java.util.Collections;
 
 import exceptions.CsvParsingException;
 
@@ -47,7 +46,7 @@ public class CsvParser {
         return header;
     }
 
-    private class ParsedCsv {
+    public class ParsedCsv {
 
         private List<String> header;
 
@@ -56,7 +55,11 @@ public class CsvParser {
         public ParsedCsv(LinkedHashSet<String> content, List<String> header) {
             this.content = content;
             this.header = header;
-            checkSize();
+            try {
+                checkSize();
+            } catch (CsvParsingException e) {
+                System.out.println(e);
+            }
         };
 
         public List<String> getHeader() {
@@ -69,7 +72,7 @@ public class CsvParser {
 
         private void checkSize() throws CsvParsingException {
             if (this.content.size() < 2) {
-                throw new CsvParsingException("Error: Invald CSV file format");
+                throw new CsvParsingException("Error: Invalid CSV file format");
             }
         }
     }
