@@ -62,6 +62,10 @@ public class CsvParserTest {
                 { "valid_1.csv", Type.VALID },
                 { "valid_dupl_lines_1.csv", Type.VALID },
 
+                // Additional Test Cases by Jie Wei
+                { "", Type.INVALID }, // Success Test Case
+                { "valid_1.csv.csv", Type.INVALID }, // Success Test Case
+                { "valid_1.csv.jpg", Type.INVALID }, // Success Test Case
         });
     }
 

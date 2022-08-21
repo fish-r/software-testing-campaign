@@ -54,6 +54,15 @@ public class CsvCompareTest {
                 { "valid_1.csv", "valid_2.csv", "Customer ID#", Type.COMPATIBLE },
                 { "valid_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.COMPATIBLE },
                 { "valid_dupl_lines_1.csv", "valid_dupl_lines_2.csv", "Customer ID#", Type.COMPATIBLE },
+
+                // Added Test Cases by Jie Wei
+                { "valid_2.csv", "valid_3.csv", "Customer ID#", Type.COMPATIBLE }, // Doesn't work for some reason.
+                { "valid_1.csv", "", "Customer ID#", Type.INCOMPATIBLE }, // Success Test Case
+
+                { "", "", "Customer ID#", Type.INCOMPATIBLE }, // Test Case fails if both inputs are empty
+                { "", "", "", Type.INCOMPATIBLE }, // Test Case fails if both inputs are empty
+                { "valid_1.csv", "valid_2.csv.csv", "Customer ID#", Type.INCOMPATIBLE }, // Success Test Case
+
         });
 
     }
